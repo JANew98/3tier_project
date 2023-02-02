@@ -1,0 +1,6 @@
+data "aws_rds_engine_version" "test" {
+  engine             = "mysql"
+  preferred_versions = ["8.0.28", "8.0.30"]
+}
+
+engine_version = ["${data.aws_rds_engine_version.test.name}"]
