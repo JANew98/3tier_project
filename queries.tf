@@ -1,5 +1,5 @@
 data "aws_key_pair" "test_key" {
-    name = "terraform_key"
+    key_name = "terraform_key"
     
     filter {
       name = "tag:targets"
@@ -8,7 +8,7 @@ data "aws_key_pair" "test_key" {
 }
 
 data "aws_key_pair" "test_key_1" {
-    name = "ansikey"
+    key_name = "ansikey"
     
     filter {
       name = "tag:targets"
