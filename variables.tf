@@ -12,7 +12,7 @@ variable "AWS_PROFILE" {
 }
 
 variable "TF_VAR_my_ip" {
-
+  default = ""
 }
 
 
