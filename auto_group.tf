@@ -11,8 +11,8 @@ resource "aws_autoscaling_group" "web_group" {
   }
 
   tag {
-    key                 = "Name"
-    value               = "web_instance"
+    key                 = "tier"
+    value               = "web"
     propagate_at_launch = true
   }
 
@@ -31,8 +31,8 @@ resource "aws_autoscaling_group" "app_group" {
   }
 
   tag {
-    key                 = "Name"
-    value               = "app_instance"
+    key                 = "tier"
+    value               = "app"
     propagate_at_launch = true
   }
 
