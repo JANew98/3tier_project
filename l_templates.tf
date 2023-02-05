@@ -23,7 +23,9 @@ resource "aws_launch_template" "web-tier" {
   instance_type = "t2.micro"
   vpc_security_group_ids = [ "${aws_security_group.bastion_ssh.id}", "${aws_security_group.web_access.id}" ]
   key_name = "${data.aws_key_pair.test_key_1.key_name}"
-
+  tags = {
+      tier = "web"
+    }
   
 }
 
@@ -33,6 +35,9 @@ resource "aws_launch_template" "app-tier" {
   instance_type = "t2.micro"
   vpc_security_group_ids = [ "${aws_security_group.web_in.id}","${aws_security_group.bastion_ssh.id}" ]
   key_name = "${data.aws_key_pair.test_key_1.key_name}"
+  tags = {
+      tier = "app"
+    }
   
 }
 
