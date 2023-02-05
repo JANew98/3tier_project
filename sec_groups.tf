@@ -1,6 +1,6 @@
 resource "aws_security_group" "allow_ssh" {
   name        = "allow_SSH"
-  description = "Allow SSH inbound traffic"
+  description = "Allow SSH from Jason"
   vpc_id      = aws_vpc.tiered_vpc.id
 
   ingress {
@@ -8,7 +8,7 @@ resource "aws_security_group" "allow_ssh" {
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    cidr_blocks      = ["${var.TF_VAR_my_ip}/32"]
   }
 
   egress {
@@ -25,7 +25,7 @@ resource "aws_security_group" "allow_ssh" {
 
 resource "aws_security_group" "web_in" {
   name        = "allow_ec2"
-  description = "Allow ec2 to ssh"
+  description = "web servers to app servers"
   vpc_id      = aws_vpc.tiered_vpc.id
 
   ingress {
@@ -70,5 +70,55 @@ resource "aws_security_group" "app_in" {
 
   tags = {
     Name = "app_in"
+  }
+}
+
+resource "aws_security_group" "bastion_ssh" {
+  name        = "bastion-ssh"
+  description = "Allow SSH inbound from bastion"
+  vpc_id      = aws_vpc.tiered_vpc.id
+
+  ingress {
+    description      = "ssh_in"
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    security_groups = ["${aws_security_group.allow_ssh.id}"]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "bastion_ssh"
+  }
+}
+
+resource "aws_security_group" "web_access" {
+  name        = "web_access"
+  description = "Allow http traffic from the web"
+  vpc_id      = aws_vpc.tiered_vpc.id
+
+  ingress {
+    description      = "ssh_in"
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "web_access"
   }
 }

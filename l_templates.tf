@@ -21,7 +21,7 @@ resource "aws_launch_template" "web-tier" {
   name_prefix   = "web-tier"
   image_id      = "${data.aws_ami.linux_instance.id}"
   instance_type = "t2.micro"
-  vpc_security_group_ids = [ "${aws_security_group.allow_ssh.id}" ]
+  vpc_security_group_ids = [ "${aws_security_group.bastion_ssh.id}", "${aws_security_group.web_access.id}" ]
   key_name = "${var.ami_key_pair_name[0]}"
 
   
@@ -31,7 +31,8 @@ resource "aws_launch_template" "app-tier" {
   name_prefix   = "app-tier"
   image_id      = "${data.aws_ami.linux_instance.id}"
   instance_type = "t2.micro"
-  vpc_security_group_ids = [ "${aws_security_group.web_in.id}" ]
+  vpc_security_group_ids = [ "${aws_security_group.web_in.id}","${aws_security_group.bastion_ssh.id}" ]
   key_name = "${var.ami_key_pair_name[1]}"
   
 }
+

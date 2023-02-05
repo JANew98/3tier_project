@@ -7,3 +7,15 @@ variable "ami_key_pair_name" {
     default = ["terraform_key","ansikey"]
 }
 
+variable "AWS_PROFILE" {
+    default = "jason-user"
+}
+
+variable "TF_VAR_my_ip" {
+
+}
+
+
+/*cidr_blocks = [
+      "${chomp(var.TF_VAR_my_ip)}/32"
+    ]*/
