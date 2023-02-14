@@ -18,7 +18,7 @@ resource "aws_autoscaling_group" "web_group" {
     "GroupInServiceInstances",
     "GroupTotalInstances"
   ]
-  metrics_granularity = "2Minutes"
+  metrics_granularity = "1Minute"
   
   launch_template {
     id      = aws_launch_template.web-tier.id
