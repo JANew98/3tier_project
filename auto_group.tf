@@ -6,7 +6,6 @@ resource "aws_autoscaling_group" "web_group" {
   min_size           = 1
 
   health_check_type    = "ELB"
-  alb_target_group_arns = ["${aws_lb_target_group.lb_tg.arn}"]
   lifecycle {
     create_before_destroy = true
   }
