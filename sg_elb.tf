@@ -49,5 +49,5 @@ resource "aws_lb_listener" "web_lb_listener" {
 
 resource "aws_autoscaling_attachment" "as_att" {
   autoscaling_group_name = "${aws_autoscaling_group.web_group.id}"
-  alb_target_group_arn   = "${aws_lb_target_group.lb_tg.arn}"
+  lb_target_group_arn   = "${aws_lb_target_group.lb_tg.arn}"
 }
